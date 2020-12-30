@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Hanalei+Fill&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Langar&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif; }
+
+main#index-page {
+  margin: auto;
+  width: 70%;
+  margin-top: 5rem; }
+  main#index-page div.intro {
+    position: relative;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    height: 20rem;
+    background-image: url("../images/newyear1.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #49ccd5; }
+    main#index-page div.intro div.row {
+      width: 100%;
+      margin: auto;
+      position: absolute;
+      bottom: 0; }
+      main#index-page div.intro div.row div.invite {
+        font-family: 'Langar', cursive;
+        position: relative;
+        bottom: -1rem;
+        width: 70%;
+        height: 45px;
+        background-color: #fefbfb;
+        border: none;
+        margin: auto;
+        border-radius: 2px;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 6px 4px 10px 0px #b1b1b1; }
+        main#index-page div.intro div.row div.invite input {
+          width: 59%;
+          border: none;
+          height: 90%;
+          font-size: 1.2rem;
+          padding-left: 15px; }
+          main#index-page div.intro div.row div.invite input:focus {
+            outline: none; }
+        main#index-page div.intro div.row div.invite button {
+          font-size: 1rem;
+          width: 38%;
+          height: 90%;
+          margin-right: 5px;
+          border-radius: 3px;
+          background-color: #49ccd5;
+          border: none;
+          color: white; }
+          main#index-page div.intro div.row div.invite button:focus {
+            outline: none; }
+          main#index-page div.intro div.row div.invite button:hover {
+            cursor: pointer;
+            background-color: #27a2aa; }
+    main#index-page div.intro h1 {
+      text-align: center;
+      padding-top: 0.5rem;
+      font-size: 3rem; }
+  main#index-page div.content {
+    min-height: 15rem;
+    background-color: snow; }
+    main#index-page div.content h1 {
+      padding-top: 2rem;
+      text-align: center;
+      margin-bottom: 1rem; }
+    main#index-page div.content div.wrapper {
+      display: flex;
+      justify-content: space-between; }
+    main#index-page div.content div.results {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly; }
+      main#index-page div.content div.results div.person-info {
+        overflow: hidden;
+        margin-bottom: 1rem;
+        margin-right: 1rem;
+        box-shadow: 5px 4px 10px 3px #8e9bab;
+        border: 1px solid #49ccd5;
+        width: 220px;
+        padding: 15px 15px; }
+        main#index-page div.content div.results div.person-info h3 {
+          padding: 0px 0px 10px 0px;
+          text-align: center; }
+        main#index-page div.content div.results div.person-info p {
+          padding: 10px 0px;
+          color: #2cb5bf; }
+        main#index-page div.content div.results div.person-info input.edit-h3 {
+          width: 100%;
+          height: 30px;
+          font-size: 1rem;
+          padding: 3px; }
+        main#index-page div.content div.results div.person-info div.row {
+          display: flex;
+          justify-content: space-between; }
+          main#index-page div.content div.results div.person-info div.row button {
+            width: 47%;
+            padding: 5px 0px;
+            margin-top: 5px;
+            border: none;
+            color: snow; }
+            main#index-page div.content div.results div.person-info div.row button:focus {
+              outline: none; }
+          main#index-page div.content div.results div.person-info div.row button.first {
+            background-color: #2cb5bf; }
+            main#index-page div.content div.results div.person-info div.row button.first:hover {
+              background-color: #238e96; }
+          main#index-page div.content div.results div.person-info div.row button.second {
+            background-color: #87dde3; }
+            main#index-page div.content div.results div.person-info div.row button.second:hover {
+              background-color: #49ccd5; }
