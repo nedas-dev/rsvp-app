@@ -1,0 +1,55 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP app</title>
+    <link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+    <main id="index-page">
+        <div class="intro">
+            <div class="title">
+                <h1>New Year Party RSVP</h1>
+                <h3>By Nedas</h3>
+            </div>
+            <div class="row">
+                <div class="invite">
+                    <input placeholder="Invite someone" type="text">
+                    <button>Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h1>Invited</h1>
+            <div class="wrapper">
+                <p class="number-invited">People Invited:</p>
+                <p class='filter'>Hide people that are not confirmed: <input type="checkbox" id="filter"></p>
+            </div>
+            <div class="results">
+                <div class="person-info">
+                    <h3>Edward Beiju</h3>
+                    <p>Confirmed <input class='confirm' type="checkbox"> </p>
+                    <div class="row">
+                        <button class='first'>Edit</button>
+                        <button class='second'>Remove</button>
+                    </div>
+                </div>
+
+                <div class="person-info">
+                    <h3>Lewis Nahamoko</h3>
+                    <p>Confirmed <input checked class='confirm' type="checkbox"> </p>
+                    <div class="row">
+                        <button class='first'>Edit</button>
+                        <button class='second'>Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type='text/javascript' src='js/main.js'></script>
+</body>
+
+</html>
