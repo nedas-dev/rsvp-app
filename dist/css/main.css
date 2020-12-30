@@ -6,8 +6,12 @@
   padding: 0;
   font-family: Arial, Helvetica, sans-serif; }
 
+body {
+  background: linear-gradient(#e66465, #9198e5); }
+
 main#index-page {
   margin: auto;
+  margin-bottom: 50px;
   width: 70%;
   margin-top: 5rem; }
   main#index-page div.intro {
@@ -69,8 +73,11 @@ main#index-page {
       padding-top: 0.5rem;
       font-size: 3rem; }
   main#index-page div.content {
+    padding: 10px;
     min-height: 15rem;
-    background-color: snow; }
+    background-color: #f0e4e4;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; }
     main#index-page div.content h1 {
       padding-top: 2rem;
       text-align: center;
@@ -84,6 +91,7 @@ main#index-page {
       flex-wrap: wrap;
       justify-content: space-evenly; }
       main#index-page div.content div.results div.person-info {
+        background-color: snow;
         overflow: hidden;
         margin-bottom: 1rem;
         margin-right: 1rem;
@@ -91,6 +99,8 @@ main#index-page {
         border: 1px solid #49ccd5;
         width: 220px;
         padding: 15px 15px; }
+        main#index-page div.content div.results div.person-info.checked {
+          background-color: #e3fdff; }
         main#index-page div.content div.results div.person-info h3 {
           padding: 0px 0px 10px 0px;
           text-align: center; }
@@ -121,3 +131,11 @@ main#index-page {
             background-color: #87dde3; }
             main#index-page div.content div.results div.person-info div.row button.second:hover {
               background-color: #49ccd5; }
+
+@media screen and (max-width: 678px) {
+  main#index-page div.intro div.row div.invite {
+    width: 95%; }
+  main#index-page div.content div.wrapper {
+    flex-direction: column;
+    margin-left: 10px;
+    padding: 20px; } }

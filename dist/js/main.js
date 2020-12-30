@@ -95,6 +95,17 @@ resultDiv.addEventListener('click', (e) => {
         let resultDiv = card.parentNode;
         resultDiv.removeChild(card);
     }
+
+    // Once the card's checkbox is checked card changes bg color;
+    if (e.target.tagName == 'INPUT' && e.target.type == 'checkbox' && e.target.checked) {
+        let parentDiv = e.target.parentNode.parentNode;
+        parentDiv.classList.add('checked');
+    } else if (e.target.tagName == 'INPUT' && e.target.type == 'checkbox' && !e.target.checked) {
+        let parentDiv = e.target.parentNode.parentNode;
+        parentDiv.classList.remove('checked');
+    }
+
+
 })
 
 // When you press Enter it Saves the changes. (works the same as you would press Save button)
@@ -127,6 +138,7 @@ filterInput.addEventListener('click', (e) => {
                 item.style.display = 'none';
             }
         }
+
     }
     if (!filterInput.checked) {
         let items = parentPersonInfo.children;
@@ -164,4 +176,3 @@ document.addEventListener('DOMContentLoaded', () => {
     let p = document.querySelector('p.number-invited');
     p.innerHTML = 'People Invited: ' + `<strong>${total}</strong>`;
 });
-
