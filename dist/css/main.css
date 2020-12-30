@@ -133,9 +133,11 @@ main#index-page {
               background-color: #49ccd5; }
 
 @media screen and (max-width: 678px) {
-  main#index-page div.intro div.row div.invite {
-    width: 95%; }
-  main#index-page div.content div.wrapper {
-    flex-direction: column;
-    margin-left: 10px;
-    padding: 20px; } }
+  main#index-page {
+    width: 90%; }
+    main#index-page div.intro div.row div.invite {
+      width: 95%; }
+    main#index-page div.content div.wrapper {
+      flex-direction: column;
+      margin-left: 10px;
+      padding: 20px; } }
