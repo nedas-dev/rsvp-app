@@ -1,12 +1,12 @@
-const inviteInput = document.querySelector('div.invite input');
-const inviteSubmit = document.querySelector('div.invite button');
-const contentDiv = document.querySelector('div.content');
-const filterInput = document.querySelector('input#filter');
-const resultDiv = document.querySelector('div.content div.results');
-const resultChildren = resultDiv.children;
 const mainIndexPage = document.querySelector('main#index-page');
+const contentDiv = document.querySelector('div.content');
+const inviteInput = document.querySelector('div.invite input');
+const inviteSubmitButton = document.querySelector('div.invite button');
+const filterInput = document.querySelector('input#filter');
+const parentOfCards = document.querySelector('div.content div.results');
+const allCards = parentOfCards.children;
 
-// function to create an element
+// function to create an html element
 function createElement(elementToCreate, ...property) {
     let element = document.createElement(elementToCreate);
     if (property.length > 0) {
@@ -17,106 +17,128 @@ function createElement(elementToCreate, ...property) {
     return element;
 }
 
-// function to create a "card" or "profile" for a person that is invited
-function createPersonDiv(inputItem) {
+// function to create a "card" for a person that is invited
+function createCard(inviteInput) {
+    function appendItems() {
+        p.appendChild(input);
+        divRow.appendChild(button1);
+        divRow.appendChild(button2);
+        div.appendChild(h3);
+        div.appendChild(p);
+        div.appendChild(divRow);
+    }
     let div = createElement('div', 'className', 'person-info');
-    let h3 = createElement('h3', 'textContent', inputItem.value)
+    let h3 = createElement('h3', 'textContent', inviteInput.value)
     let p = createElement('p', 'textContent', 'Confirmed ');
     let input = createElement('input', 'type', 'checkbox', 'className', 'confirm');
     let divRow = createElement('div', 'className', 'row');
     let button1 = createElement('button', 'className', 'first', 'textContent', 'Edit');
     let button2 = createElement('button', 'className', 'second', 'textContent', 'Remove');
-    p.appendChild(input);
-    divRow.appendChild(button1);
-    divRow.appendChild(button2);
-    div.appendChild(h3);
-    div.appendChild(p);
-    div.appendChild(divRow);
+    // Appending items to create the div we need to return;
+    appendItems();
     return div;
 }
 
-// Submit the people you want to invite
-inviteSubmit.addEventListener('click', (e) => {
-    let div = createPersonDiv(inviteInput);
-    if (filterInput.checked) {
-        div.style.display = 'none';
+// 'Submit' button clicked (Submit the people you want to invite)
+inviteSubmitButton.addEventListener('click', (e) => {
+    let card = createCard(inviteInput);
+    let checkboxChecked = filterInput.checked;
+    let h3ElementOfCard = card.querySelector('h3').textContent
+    if (checkboxChecked) {
+        card.style.display = 'none';
     }
-    let h3Content = div.querySelector('h3').textContent
-    if (h3Content.length > 0) {
-        resultDiv.appendChild(div);
+    let inputExists = h3ElementOfCard.length > 0 ? true : false;
+    if (inputExists) {
+        parentOfCards.appendChild(card);
     }
     inviteInput.value = '';
 })
 
-// When you press Enter it works as 'Submit' button;
+// Pressing 'Enter' When focused on InviteInput will be equal to 'Submit' Button;
 inviteInput.addEventListener('keydown', (e) => {
-    if (e.code == 'Enter') {
-        let div = createPersonDiv(inviteInput);
-        if (filterInput.checked) {
-            div.style.display = 'none';
+    let keyPressed = e.code;
+    if (keyPressed == 'Enter') {
+        let card = createCard(inviteInput);
+        let checked = filterInput.checked;
+        if (checked) {
+            card.style.display = 'none';
         }
-        let h3Content = div.querySelector('h3').textContent
-        if (h3Content.length > 0) {
-            resultDiv.appendChild(div);
+        let h3ElementOfCard = card.querySelector('h3').textContent
+        if (h3ElementOfCard.length > 0) {
+            parentOfCards.appendChild(card);
         }
         inviteInput.value = '';
     }
 })
 
 // Edit/Remove existing "Card"
-resultDiv.addEventListener('click', (e) => {
-    let editButton = e.target;
+parentOfCards.addEventListener('click', (e) => {
+    let button = e.target;
+    let tagName = e.target.tagName;
     // Entering Edit mode
-    if (e.target.tagName == 'BUTTON' && e.target.className == 'first' && e.target.textContent == 'Edit') {
-        editButton.textContent = 'Save';
-        let tempInput = createElement('input', 'className', 'edit-h3', 'type', 'text');
-        let personInfoDiv = editButton.parentNode.parentNode;
-        let h3 = personInfoDiv.firstElementChild;
-        tempInput.value = h3.textContent;
-        personInfoDiv.insertBefore(tempInput, h3);
-        personInfoDiv.removeChild(h3);
-        // Entering Save mode (saving the card)
-    } else if (e.target.tagName == 'BUTTON' && e.target.className == 'first' && e.target.textContent == 'Save') {
-        let personInfoDiv = editButton.parentNode.parentNode;
-        let tempInput = personInfoDiv.firstElementChild;
-        let h3 = createElement('h3', 'textContent', tempInput.value);
-        // If tempInput is empty (no text) then you can't save the "card";
-        if (tempInput.value.length > 0) {
-            editButton.textContent = 'Edit';
-            personInfoDiv.insertBefore(h3, tempInput);
-            personInfoDiv.removeChild(tempInput);
+    if (tagName == 'BUTTON') {
+        let buttonClass = button.className;
+        let buttonName = button.textContent;
+        let userAction = {
+            Edit: () => {
+                button.textContent = 'Save';
+                let tempInput = createElement('input', 'className', 'edit-h3', 'type', 'text');
+                let card = button.parentNode.parentNode;
+                let h3 = card.firstElementChild;
+                tempInput.value = h3.textContent;
+                card.insertBefore(tempInput, h3);
+                card.removeChild(h3);
+            },
+            Save: () => {
+                let card = button.parentNode.parentNode;
+                let tempInput = card.firstElementChild;
+                let h3 = createElement('h3', 'textContent', tempInput.value);
+                // If tempInput is empty (no text) then you can't save the "card";
+                if (tempInput.value.length > 0) {
+                    button.textContent = 'Edit';
+                    card.insertBefore(h3, tempInput);
+                    card.removeChild(tempInput);
+                }
+            },
+            Remove: () => {
+                let card = button.parentNode.parentNode;
+                parentOfCards.removeChild(card);
+            }
         }
-    }
-    // Removing the card which "remove" button was pressed.
-    if (e.target.tagName == 'BUTTON' && e.target.className == 'second') {
-        let card = e.target.parentNode.parentNode;
-        let resultDiv = card.parentNode;
-        resultDiv.removeChild(card);
+        // Edit/Save modes and Remove button;
+        if (buttonName == 'Edit' && buttonClass == 'first') {
+            userAction.Edit();
+        } else if (buttonName == 'Save' && buttonClass == 'first') {
+            userAction.Save();
+        } else if (buttonName == 'Remove' && buttonClass == 'second') {
+            userAction.Remove();
+        }
     }
 
     // Once the card's checkbox is checked that card's bg color changes;
-    if (e.target.tagName == 'INPUT' && e.target.type == 'checkbox' && e.target.checked) {
-        let parentDiv = e.target.parentNode.parentNode;
-        parentDiv.classList.add('checked');
-    } else if (e.target.tagName == 'INPUT' && e.target.type == 'checkbox' && !e.target.checked) {
-        let parentDiv = e.target.parentNode.parentNode;
-        parentDiv.classList.remove('checked');
+    if (tagName == 'INPUT') {
+        if (button.type == 'checkbox' && button.checked) {
+            let card = button.parentNode.parentNode;
+            card.classList.add('checked');
+        } else if (button.type == 'checkbox' && !button.checked) {
+            let card = button.parentNode.parentNode;
+            card.classList.remove('checked');
+        }
     }
-
 
 })
 
 // When you press Enter it Saves the changes. (works the same as you would press Save button)
-resultDiv.addEventListener('keydown', (e) => {
+parentOfCards.addEventListener('keydown', (e) => {
     if (e.target.tagName == 'INPUT' && e.target.className == 'edit-h3' && e.code == 'Enter') {
         let inputButton = e.target;
         // If inputButton is empty (no text) then you can't save the "card";
         if (inputButton.value.length > 0) {
-            let personInfoDiv = inputButton.parentNode;
+            let card = inputButton.parentNode;
             let h3 = createElement('h3', 'textContent', inputButton.value);
-            personInfoDiv.insertBefore(h3, inputButton);
-            personInfoDiv.removeChild(inputButton);
-            let divRow = personInfoDiv.lastElementChild;
+            card.insertBefore(h3, inputButton);
+            card.removeChild(inputButton);
+            let divRow = card.lastElementChild;
             let editButton = divRow.firstElementChild;
             editButton.textContent = 'Edit';
         }
@@ -126,7 +148,7 @@ resultDiv.addEventListener('keydown', (e) => {
 // Creating filter function that removes unconfirmed cards.
 filterInput.addEventListener('click', (e) => {
     if (filterInput.checked) {
-        let items = resultDiv.children;
+        let items = parentOfCards.children;
         for (let i = 0; i < items.length; i++) {
             let item = items[i];
             let confirmed = item.querySelector('input.confirm').checked;
@@ -138,7 +160,7 @@ filterInput.addEventListener('click', (e) => {
     }
     // turning off Filter mode.
     if (!filterInput.checked) {
-        let items = resultDiv.children;
+        let items = parentOfCards.children;
         for (let i = 0; i < items.length; i++) {
             let item = items[i];
             let confirmed = item.querySelector('input.confirm').checked;
@@ -152,7 +174,7 @@ filterInput.addEventListener('click', (e) => {
 // Adding counter for how many people were invited.
 mainIndexPage.addEventListener('click', (e) => {
     if (e.target.tagName == 'BUTTON' && e.target.textContent == 'Submit' || e.target.textContent == 'Remove') {
-        let total = resultChildren.length;
+        let total = allCards.length;
         let p = document.querySelector('p.number-invited');
         p.innerHTML = 'People Invited: ' + `<strong>${total}</strong>`;
     }
@@ -161,7 +183,7 @@ mainIndexPage.addEventListener('click', (e) => {
 // When pressed Enter to submit the person. We want to make a recount of the number of people invited;
 mainIndexPage.addEventListener('keydown', (e) => {
     if (e.code == 'Enter' && e.target.tagName == 'INPUT' && e.target.placeholder == 'Invite someone') {
-        let total = resultChildren.length;
+        let total = allCards.length;
         let p = document.querySelector('p.number-invited');
         p.innerHTML = 'People Invited: ' + `<strong>${total}</strong>`;
     }
@@ -169,7 +191,7 @@ mainIndexPage.addEventListener('keydown', (e) => {
 
 // Once the page loads DOM (HTML Elements) to count the amount of people invited currently;
 document.addEventListener('DOMContentLoaded', () => {
-    let total = resultChildren.length;
+    let total = allCards.length;
     let p = document.querySelector('p.number-invited');
     p.innerHTML = 'People Invited: ' + `<strong>${total}</strong>`;
 });
