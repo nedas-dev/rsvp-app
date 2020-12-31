@@ -65,8 +65,9 @@ inviteInput.addEventListener('keydown', (e) => {
 
 // Edit/Remove existing "Card"
 resultDiv.addEventListener('click', (e) => {
+    let editButton = e.target;
+    // Entering Edit mode
     if (e.target.tagName == 'BUTTON' && e.target.className == 'first' && e.target.textContent == 'Edit') {
-        let editButton = e.target;
         editButton.textContent = 'Save';
         let tempInput = createElement('input', 'className', 'edit-h3', 'type', 'text');
         let personInfoDiv = editButton.parentNode.parentNode;
@@ -74,27 +75,26 @@ resultDiv.addEventListener('click', (e) => {
         tempInput.value = h3.textContent;
         personInfoDiv.insertBefore(tempInput, h3);
         personInfoDiv.removeChild(h3);
+        // Entering Save mode (saving the card)
     } else if (e.target.tagName == 'BUTTON' && e.target.className == 'first' && e.target.textContent == 'Save') {
-        let editButton = e.target;
-        let h3 = document.createElement('h3');
         let personInfoDiv = editButton.parentNode.parentNode;
         let tempInput = personInfoDiv.firstElementChild;
+        let h3 = createElement('h3', 'textContent', tempInput.value);
         // If tempInput is empty (no text) then you can't save the "card";
         if (tempInput.value.length > 0) {
             editButton.textContent = 'Edit';
-            h3.textContent = tempInput.value;
             personInfoDiv.insertBefore(h3, tempInput);
             personInfoDiv.removeChild(tempInput);
         }
     }
-
+    // Removing the card which "remove" button was pressed.
     if (e.target.tagName == 'BUTTON' && e.target.className == 'second') {
         let card = e.target.parentNode.parentNode;
         let resultDiv = card.parentNode;
         resultDiv.removeChild(card);
     }
 
-    // Once the card's checkbox is checked card changes bg color;
+    // Once the card's checkbox is checked that card's bg color changes;
     if (e.target.tagName == 'INPUT' && e.target.type == 'checkbox' && e.target.checked) {
         let parentDiv = e.target.parentNode.parentNode;
         parentDiv.classList.add('checked');
@@ -113,8 +113,7 @@ resultDiv.addEventListener('keydown', (e) => {
         // If inputButton is empty (no text) then you can't save the "card";
         if (inputButton.value.length > 0) {
             let personInfoDiv = inputButton.parentNode;
-            let h3 = document.createElement('h3');
-            h3.textContent = inputButton.value;
+            let h3 = createElement('h3', 'textContent', inputButton.value);
             personInfoDiv.insertBefore(h3, inputButton);
             personInfoDiv.removeChild(inputButton);
             let divRow = personInfoDiv.lastElementChild;
@@ -124,8 +123,7 @@ resultDiv.addEventListener('keydown', (e) => {
     }
 })
 
-// Filtering out those that are not confirmed yet.
-
+// Creating filter function that removes unconfirmed cards.
 filterInput.addEventListener('click', (e) => {
     if (filterInput.checked) {
         let items = resultDiv.children;
@@ -138,6 +136,7 @@ filterInput.addEventListener('click', (e) => {
         }
 
     }
+    // turning off Filter mode.
     if (!filterInput.checked) {
         let items = resultDiv.children;
         for (let i = 0; i < items.length; i++) {
@@ -159,7 +158,7 @@ mainIndexPage.addEventListener('click', (e) => {
     }
 });
 
-// When pressed Enter to submit the person recounting the number of people invited;
+// When pressed Enter to submit the person. We want to make a recount of the number of people invited;
 mainIndexPage.addEventListener('keydown', (e) => {
     if (e.code == 'Enter' && e.target.tagName == 'INPUT' && e.target.placeholder == 'Invite someone') {
         let total = resultChildren.length;
@@ -168,7 +167,7 @@ mainIndexPage.addEventListener('keydown', (e) => {
     }
 });
 
-// Once the page loaded to count the amount of people invited;
+// Once the page loads DOM (HTML Elements) to count the amount of people invited currently;
 document.addEventListener('DOMContentLoaded', () => {
     let total = resultChildren.length;
     let p = document.querySelector('p.number-invited');
