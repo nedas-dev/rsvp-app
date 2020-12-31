@@ -2,7 +2,7 @@ const mainIndexPage = document.querySelector('main#index-page');
 const contentDiv = document.querySelector('div.content');
 const inviteInput = document.querySelector('div.invite input');
 const inviteSubmitButton = document.querySelector('div.invite button');
-const filterInput = document.querySelector('input#filter');
+const filterCheckbox = document.querySelector('input#filter');
 const parentOfCards = document.querySelector('div.content div.results');
 const allCards = parentOfCards.children;
 
@@ -42,7 +42,7 @@ function createCard(inviteInput) {
 // 'Submit' button clicked (Submit the people you want to invite)
 inviteSubmitButton.addEventListener('click', (e) => {
     let card = createCard(inviteInput);
-    let checkboxChecked = filterInput.checked;
+    let checkboxChecked = filterCheckbox.checked;
     let h3ElementOfCard = card.querySelector('h3').textContent
     if (checkboxChecked) {
         card.style.display = 'none';
@@ -59,7 +59,7 @@ inviteInput.addEventListener('keydown', (e) => {
     let keyPressed = e.code;
     if (keyPressed == 'Enter') {
         let card = createCard(inviteInput);
-        let checked = filterInput.checked;
+        let checked = filterCheckbox.checked;
         if (checked) {
             card.style.display = 'none';
         }
@@ -146,8 +146,8 @@ parentOfCards.addEventListener('keydown', (e) => {
 })
 
 // Creating filter function that removes unconfirmed cards.
-filterInput.addEventListener('click', (e) => {
-    if (filterInput.checked) {
+filterCheckbox.addEventListener('click', (e) => {
+    if (filterCheckbox.checked) {
         let items = parentOfCards.children;
         for (let i = 0; i < items.length; i++) {
             let item = items[i];
@@ -159,7 +159,7 @@ filterInput.addEventListener('click', (e) => {
 
     }
     // turning off Filter mode.
-    if (!filterInput.checked) {
+    if (!filterCheckbox.checked) {
         let items = parentOfCards.children;
         for (let i = 0; i < items.length; i++) {
             let item = items[i];
@@ -173,6 +173,7 @@ filterInput.addEventListener('click', (e) => {
 
 // Adding counter for how many people were invited.
 mainIndexPage.addEventListener('click', (e) => {
+
     if (e.target.tagName == 'BUTTON' && e.target.textContent == 'Submit' || e.target.textContent == 'Remove') {
         let total = allCards.length;
         let p = document.querySelector('p.number-invited');
@@ -182,16 +183,19 @@ mainIndexPage.addEventListener('click', (e) => {
 
 // When pressed Enter to submit the person. We want to make a recount of the number of people invited;
 mainIndexPage.addEventListener('keydown', (e) => {
-    if (e.code == 'Enter' && e.target.tagName == 'INPUT' && e.target.placeholder == 'Invite someone') {
-        let total = allCards.length;
+    let keyPressed = e.code;
+    let tagName = e.target.tagName;
+    let className = e.target.className;
+    if (keyPressed == 'Enter' && tagName == 'INPUT' && className == 'inviteInput') {
+        let numberOfCards = allCards.length;
         let p = document.querySelector('p.number-invited');
-        p.innerHTML = 'People Invited: ' + `<strong>${total}</strong>`;
+        p.innerHTML = 'People Invited: ' + `<strong>${numberOfCards}</strong>`;
     }
 });
 
 // Once the page loads DOM (HTML Elements) to count the amount of people invited currently;
 document.addEventListener('DOMContentLoaded', () => {
-    let total = allCards.length;
+    let numberOfCards = allCards.length;
     let p = document.querySelector('p.number-invited');
-    p.innerHTML = 'People Invited: ' + `<strong>${total}</strong>`;
+    p.innerHTML = 'People Invited: ' + `<strong>${numberOfCards}</strong>`;
 });
